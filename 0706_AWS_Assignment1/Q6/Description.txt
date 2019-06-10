@@ -1,0 +1,13 @@
+To solve the required problem : 
+
+We can create a group of Free lancers (users) and while creating the group,
+we can specify the policy such that the users are allowed to access the
+
+Service : AWS accounts
+Access Level : Full access
+Resources :  All resources
+(only when present in the Company Network)
+which can be specified by specifying IP address of company network.
+
+
+
