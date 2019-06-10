@@ -1,0 +1,25 @@
+{
+    "Id": "Policy1560062594821",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1560062457272",
+            "Action": "s3:*",
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::a1q3/MySecretFolder",
+            "Principal": "*"
+        },
+        {
+            "Sid": "Stmt1560062593241",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:PutObject"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::a1q3/*",
+            "Principal": {
+                "AWS": "arn:aws:iam::488599217855:root"
+            }
+        }
+    ]
+}
