@@ -1,0 +1,49 @@
+{
+  "Description": "Launch Template ",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+
+    "KeyPairName": {
+      "Description": "Name of an existing Amazon EC2 key pair to enable SSH or RDP access to the instances.",
+      "Type": "String",
+      "MinLength": "1",
+      "MaxLength": "255",
+      "AllowedPattern": "[\\x20-\\x7E]*",
+      "ConstraintDescription": "KeyPairName is a required Field and can contain only ASCII characters."
+    },
+    "InstanceType": {
+      "Description": "Amazon EC2 instance type.",
+      "Type": "String",
+      "Default": "t2.micro",
+      "ConstraintDescription": "Must be a valid Amazon EC2 instance type."
+    }
+
+  },
+  "Mappings": {
+     "RegionMap" : {
+      "us-east-1"        : {"HVM64" : "ami-0ff8a91507f77f867", "HVMG2" : "ami-0a584ac55a7631c0c"},
+      "us-west-1"        : {"HVM64" : "ami-0bdb828fd58c52235", "HVMG2" : "ami-066ee5fd4a9ef77f1"}
+      }
+  },
+
+  "Resources": {
+    "LinuxEC2Instance": {
+      "Type": "AWS::EC2::Instance",
+
+      "Properties": {
+        "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "HVM64"]},
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+
+        "UserData": {
+          "Fn::Base64": ",\"#!/bin/sh chmod +x -- \"$0\" echo \"Installing Apache..\" sudo yum -y install httpd echo \"Starting Apache..\" sudo service httpd start echo \"Printing..\" ls -l /var/www echo \"Giving Permissions to ec2-user\" sudo usermod -a -G apache ec2-user sudo chown -R ec2-user:apache /var/www sudo chmod 2775 /var/www find /var/www -type d -exec sudo chmod 2775 {} \\; find /var/ww -type f -exec sudo chmod 0664 {} \\; echo \"<!DOCTYPE html><html><head><title>AWS Assignment2</title></head><body><h1>Install Apache on start of an Instance</h1><p>By - Pranjali Mehta.</p></body </html>\" > /var/www/html/index.html \" "
+        },
+        "KeyName": {
+          "Ref": "KeyPairName"
+        }
+
+      }
+    }
+  }
+}
