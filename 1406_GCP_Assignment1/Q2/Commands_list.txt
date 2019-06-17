@@ -1,0 +1,11 @@
+Commands Used to achieve the required tasks are:
+
+gcloud init : To achieve the task by choices
+gcloud config configuration create myconfig : To create a new configuration
+gcloud config configuration activate myconfig : To activate configuration
+gcloud config set account 'ACCOUNT' : to connect required account to our conffiguration 
+gcloud projects create myproject : to create new project
+gcloud config list : to list available configurations
+
+
+
