@@ -1,0 +1,6 @@
+VPC Creation:
+gcloud compute networks create a2q1vpc --bgp-routing-mode global --description "GCP Assignment 2" --subnet-mode custom
+
+Subnets Creation:
+gcloud compute networks subnets create a2q1subcentral --network a2q1vpc  --region us-central1   --range 192.168.1.0/24
+gcloud compute networks subnets create a2q1subeast --network a2q1vpc  --region us-east1   --range 192.168.5.0/24

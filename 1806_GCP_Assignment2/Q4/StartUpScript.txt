@@ -1,0 +1,9 @@
+gcloud compute instances create a2q4instance --tags http-server,https-server,pranjali --metadata startup-script='#! /bin/bash
+> apt-get update & apt-get upgrade
+> apt-get install -y apache2
+> cat <<EOF > /var/www/html/index.html
+> <html><body><h1>GCP Assignment 2</h1>
+> <p>By - Pranjali Mehta</p>
+> </body></html>
+> EOF
+> gsutil cp /var/log/apache2/access.log  gs://a2q4bucket/AccessLogs.log'

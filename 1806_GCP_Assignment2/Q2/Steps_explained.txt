@@ -1,0 +1,14 @@
+
+1. Creating an instance which will act as NAT Gateway
+	gcloud compute instances create a2-nat-gateway --network a2q2vpc --can-ip-forward --zone us-east1-b --image debian-9 --tags a2q2nat
+
+2. Creating another instance which will have private IP
+	gcloud compute instances create a2q2instance --network a2q2vpc --no-address --zone us-east1-b --tags no-ip
+
+3.Creating a route for sending outside traffic via gateway and associating a priority of 500 
+	gcloud compute routes create a2q2route --network a2q2vpc --destination-range 0.0.0.0/0 --next-hop-instance a2-nat-gateway --next-hop-instance-zone us-east1-b --tags no-ip --priority 500
+
+4. logging in to nat gateway instance to configure iptables
+	gcloud compute ssh a2-nat-gateway --zone us-east1-b
+	user@nat-gateway:~$ sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+	user@nat-gateway:~$ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
