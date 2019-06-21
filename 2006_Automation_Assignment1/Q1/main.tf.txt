@@ -1,0 +1,18 @@
+provider "aws" {
+  profile    = "default"
+  region     = "us-east-1"
+}
+
+
+
+resource "aws_instance" "autoa1instance" {
+  count         = "${var.instance_count}"
+  ami           = "ami-2757f631"
+  instance_type = "t2.micro"
+  security_groups = [ "${aws_security_group.ssh_http_sgt.name}" ]
+  tags = {
+    Name  = "${var.instance_name}-${count.index + 1}"
+  }
+
+   depends_on = [aws_security_group.ssh_http_sgt]
+}

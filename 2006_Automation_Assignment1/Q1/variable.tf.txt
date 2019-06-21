@@ -1,0 +1,9 @@
+variable "instance_count"{
+  default = 2
+}
+
+variable "instance_name"{
+  default = "autot"
+}
+
+# We can skip thd default values for user to input them
